@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const ProductRouter = require("./Routes/ProductRoute");
 const CategoryRouter = require("./Routes/CategoryRoute");
 const PORT = process.env.PORT || 3000;
@@ -7,13 +8,11 @@ const DBURL = process.env.DBURL || "mongodb://localhost:27017/testDb";
 const app = express();
 
 mongoose
-  .connect(DBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(DBURL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
+dotenv.config();
 app.use(express.json());
 app.use("/product", ProductRouter);
 app.use("/category", CategoryRouter);
