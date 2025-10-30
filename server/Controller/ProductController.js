@@ -1,5 +1,6 @@
 const Products = require("../Models/ProductModel");
 const Categories = require("../Models/CategoryModel");
+const { uploadImage, deleteImage } = require("../Utils/cloudinary");
 
 async function getAllProducts(req, res) {
   try {
@@ -12,13 +13,19 @@ async function getAllProducts(req, res) {
 
 async function createProduct(req, res) {
   try {
-    const { name, imageUrl, categoryId } = req.body;
+    const { name, categoryId } = req.body;
 
     if (!(await Categories.findById(categoryId))) {
       return res.status(400).json({ message: "Invalid categoryId" });
     }
 
-    const product = new Products({ name, imageUrl, categoryId });
+    if (!req.file) {
+      return res.status(400).json({ message: "Image file is required" });
+    }
+
+    const { imageUrl, publicId } = await uploadImage(req.file.path, "products");
+
+    const product = new Products({ name, imageUrl, publicId, categoryId });
     const savedProduct = await product.save();
     res.status(201).json(savedProduct);
   } catch (error) {

@@ -5,12 +5,13 @@ const {
   deleteProduct,
   updateProduct,
 } = require("../Controller/ProductController");
+const upload = require("../Middleware/Multer");
 
 const ProductRouter = express.Router();
 
 ProductRouter.get("/", getAllProducts);
-ProductRouter.post("/", createProduct);
-ProductRouter.put("/:id", updateProduct);
+ProductRouter.post("/", upload.single("image"), createProduct);
+ProductRouter.put("/:id", upload.single("image"), updateProduct);
 ProductRouter.delete("/:id", deleteProduct);
 
 module.exports = ProductRouter;
