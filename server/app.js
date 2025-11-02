@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors")
 const ProductRouter = require("./Routes/ProductRoute");
 const CategoryRouter = require("./Routes/CategoryRoute");
 const PORT = process.env.PORT || 3000;
@@ -14,7 +15,6 @@ mongoose
   .catch((err) => console.log(err));
 
 dotenv.config();
-///
 const { engine } = require("express-handlebars");
 
 app.engine(
@@ -29,8 +29,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
-///
 app.use(express.json());
+app.use(cors())
 app.use("/product", ProductRouter);
 app.use("/category", CategoryRouter);
 app.use("/view", viewRoutes);

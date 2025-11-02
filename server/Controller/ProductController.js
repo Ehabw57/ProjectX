@@ -3,10 +3,11 @@ const Products = require("../Models/ProductModel");
 const Categories = require("../Models/CategoryModel");
 const { uploadImage, deleteImage } = require("../Utils/cloudinary");
 const { request } = require("http");
+const resizeImage = require('../Utils/imageProcess')
 
 async function getAllProducts(req, res) {
   try {
-    const products = await Products.find();
+    const products = await Products.find().populate("categoryId", "name");
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
