@@ -5,11 +5,13 @@ const {
   deleteCategory,
   UpdateCategory,
   getAllCategories,
+  getCategoryById,
 } = require("../Controller/CategoryController");
-const upload = require("../Middleware/Multer")
+const upload = require("../Middleware/Multer");
 
 router.post("/", upload.single("image"), createCategory);
 router.get("/", getAllCategories);
+router.get("/:id", getCategoryById);
 router.put("/:id", upload.single("image"), UpdateCategory);
 router.delete("/:id", deleteCategory);
 
