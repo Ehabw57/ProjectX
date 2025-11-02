@@ -1,5 +1,7 @@
+const fs = require("fs");
 const Category = require("../Models/CategoryModel");
 const Product = require("../Models/ProductModel");
+const resizeImage = require("../Utils/imageProcess");
 const { uploadImage, deleteImage } = require("../Utils/cloudinary");
 
 const createCategory = async (req, res) => {
@@ -10,10 +12,13 @@ const createCategory = async (req, res) => {
       return res.status(400).send({ message: "Image is required" });
     }
 
+    req.file.buffer = await resizeImage(req.file.path, 500, 500);
     const { imageUrl, publicId } = await uploadImage(
       req.file.path,
       "categories"
     );
+
+    fs.unlinkSync(req.file.path);
 
     const category = new Category({
       name,
@@ -49,12 +54,14 @@ const UpdateCategory = async (req, res) => {
     }
 
     if (req.file) {
+      await resizeImage(req.file.path, 500, 500);
       const { imageUrl, publicId } = await uploadImage(
         req.file.path,
         "categories"
       );
       req.body.imageUrl = imageUrl;
       req.body.publicId = publicId;
+      fs.unlinkSync(req.file.path);
       await deleteImage(category.publicId);
     }
     const updatedCategory = await Category.findByIdAndUpdate(

@@ -1,6 +1,8 @@
+const fs = require("fs");
 const Products = require("../Models/ProductModel");
 const Categories = require("../Models/CategoryModel");
 const { uploadImage, deleteImage } = require("../Utils/cloudinary");
+const { request } = require("http");
 
 async function getAllProducts(req, res) {
   try {
@@ -23,7 +25,9 @@ async function createProduct(req, res) {
       return res.status(400).json({ message: "Image file is required" });
     }
 
+    await resizeImage(req.file.path, 500, 500);
     const { imageUrl, publicId } = await uploadImage(req.file.path, "products");
+    fs.unlinkSync(req.file.path);
 
     const product = new Products({ name, imageUrl, publicId, categoryId });
     const savedProduct = await product.save();
@@ -41,6 +45,21 @@ async function updateProduct(req, res) {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+
+    if (req.file) {
+      await resizeImage(req.file.path, 500, 500);
+      const { imageUrl, publicId } = await uploadImage(
+        req.file.path,
+        "products"
+      );
+      fs.unlinkSync(req.file.path);
+      await deleteImage(product.publicId);
+      req.body.imageUrl = imageUrl;
+      req.body.publicId = publicId;
+    }
+    product = request.body;
+    await product.save();
+
     res.json(product);
   } catch (error) {
     res.status(400).json({ message: error.message });
