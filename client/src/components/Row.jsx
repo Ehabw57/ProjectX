@@ -56,33 +56,29 @@ export default function Row({ item, onDelete }) {
     }
   };
   return (
-    <tr>
-      <td className="p-4 border-b border-gray-200 flex space-x-2 justify-center items-center">
+    <tr className="border-b border-gray-200 hover:bg-gray-50 ">
+      <td className="p-4  flex space-x-2 justify-center items-center">
         {loadingIds.includes(item._id) && (
           <div className=" w-10 h-10 border-4 border-blue-300 border-t-transparent rounded-full animate-spin"></div>
         )}
         <img src={item.imageUrl} className="w-5 h-5" />
       </td>
-      <td className="py-4 border-b border-gray-200">{item.name}</td>
-      {item.categoryId && (
-        <td className="py-4 border-b border-gray-200">
-          {item.categoryId.name}
-        </td>
-      )}
-      <td className="py-4 border-b border-gray-200 space-x-2">
+      <td className="py-4 ">{item.name}</td>
+      {item.categoryId && <td className="py-4 ">{item.categoryId.name}</td>}
+      <td className="py-4  space-x-2 ">
         <Link
           to={`/form/${item.categoryId ? "product" : "category"}/${item._id}`}
           state={{ item }}
-          className="text-blue-500 hover:underline"
+          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800 text-xs sm:text-lg"
         >
-          Edit
+          تعديل
         </Link>
         <button
           hidden={loadingIds.includes(item._id)}
           onClick={() => handleDelete(item._id)}
-          className="text-red-500 hover:underline"
+          className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs sm:text-lg"
         >
-          Delete
+          حذف
         </button>
       </td>
     </tr>

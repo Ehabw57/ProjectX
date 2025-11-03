@@ -21,20 +21,20 @@ function LoginModal({ onClose }) {
   // if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex justify-center items-center z-50">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-lg w-96 p-6 animate-fadeIn"
       >
         <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">
-          Admin Login
+          تسجيل الدخول كمسؤول
         </h1>
 
         <div className="mb-4">
           <input
             className="w-full px-3 py-2 border-1 border-blue-400 rounded outline-none focus:ring-2 focus:ring-blue-400"
             type="password"
-            placeholder="Enter admin password"
+            placeholder="أدخل كلمة مرور المسؤول"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -49,7 +49,7 @@ function LoginModal({ onClose }) {
           type="submit"
           disabled={!password.trim()}
         >
-          Confirm
+          تأكيد
         </button>
       </form>
     </div>

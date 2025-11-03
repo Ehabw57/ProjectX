@@ -1,104 +1,3 @@
-// import React, { useState, useRef } from "react";
-
-// function ImageUpload({ previewx = null }) {
-//   const [fileName, setFileName] = useState("");
-//   const [preview, setPreview] = useState(previewx);
-//   const fileInputRef = useRef(null);
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       setFileName(file.name);
-//       setPreview(URL.createObjectURL(file));
-//     }
-//   };
-
-//   const handleDrop = (e) => {
-//     e.preventDefault();
-//     const file = e.dataTransfer.files[0];
-//     if (file) {
-//       setFileName(file.name);
-//       setPreview(URL.createObjectURL(file));
-//     }
-//   };
-
-//   const handleDragOver = (e) => e.preventDefault();
-
-//   const handleRemove = () => {
-//     setFileName("");
-//     setPreview(null);
-//     fileInputRef.current.value = ""; // reset input value
-//   };
-
-//   return (
-//     <div className="w-full  ">
-//       <label className="block text-sm font-medium text-gray-700 mb-2">
-//         Image
-//       </label>
-
-//       <div
-//         className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-400 transition relative"
-//         onDrop={handleDrop}
-//         onDragOver={handleDragOver}
-//         onClick={() => fileInputRef.current.click()}
-//       >
-//         {preview ? (
-//           <div className="relative">
-//             <img
-//               src={preview}
-//               alt="Preview"
-//               className="mx-auto h-40 object-contain rounded"
-//             />
-//             <button
-//               type="button"
-//               onClick={(e) => {
-//                 e.stopPropagation();
-//                 handleRemove();
-//               }}
-//               className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
-//             >
-//               Remove
-//             </button>
-//           </div>
-//         ) : (
-//           <>
-//             <svg
-//               className="mx-auto h-12 w-12 text-gray-400"
-//               stroke="currentColor"
-//               fill="none"
-//               viewBox="0 0 48 48"
-//             >
-//               <path
-//                 d="M28 8H20V20H8v8h12v12h8V28h12v-8H28V8z"
-//                 strokeWidth="2"
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//               />
-//             </svg>
-//             <p className="mt-2 text-sm text-gray-600">
-//               <span className="text-blue-600 font-medium">Upload a file</span>{" "}
-//               or drag and drop
-//             </p>
-//           </>
-//         )}
-
-//         <input
-//           type="file"
-//           accept="image/*"
-//           ref={fileInputRef}
-//           className="hidden"
-//           onChange={handleFileChange}
-//         />
-//       </div>
-
-//       {fileName && (
-//         <p className="mt-2 text-sm text-gray-500 text-center">{fileName}</p>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default ImageUpload;
 import React, { useState, useRef } from "react";
 
 function ImageUpload({ previewx = null, onUpload }) {
@@ -145,8 +44,8 @@ function ImageUpload({ previewx = null, onUpload }) {
 
   return (
     <div className="w-full">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Image
+      <label className="text-right block text-sm font-medium text-gray-700 mb-2">
+        الصورة
       </label>
 
       <div
@@ -170,7 +69,7 @@ function ImageUpload({ previewx = null, onUpload }) {
               }}
               className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
             >
-              Remove
+              إزالة
             </button>
           </div>
         ) : (
@@ -189,8 +88,8 @@ function ImageUpload({ previewx = null, onUpload }) {
               />
             </svg>
             <p className="mt-2 text-sm text-gray-600">
-              <span className="text-blue-600 font-medium">Upload a file</span>{" "}
-              or drag and drop
+              <span className="text-blue-600 font-medium">تحميل ملف</span> أو
+              اسحب وأفلت
             </p>
           </>
         )}
