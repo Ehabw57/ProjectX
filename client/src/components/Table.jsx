@@ -6,7 +6,7 @@ export default function Table({ data, type, onDelete }) {
         <tr className="bg-gray-100 border-b-2 border-gray-500">
           <th className="py-2  border-b border-gray-200 ">Image</th>
           <th className="py-2 border-b border-gray-200 ">Name</th>
-          {type === "products" && (
+          {type === "product" && (
             <th className="py-2 border-b border-gray-200 ">Category</th>
           )}
           <th className="py-2  border-b border-gray-200 ">Actions</th>
