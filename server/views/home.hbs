@@ -1,20 +1,24 @@
-<h1 class="text-3xl font-bold my-8 text-center">Shop by Category</h1>
-<div class="min-h-70vh">
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 container">
-    {{#each categories}}
-      <a
-        href="/view/category/{{this._id}}/products"
-        class="bg-white rounded-lg shadow-md hover:shadow-lg transition"
-      >
-        <img
-          src="{{this.imageUrl}}"
-          alt="{{this.name}}"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4 text-center">
-          <h2 class="text-xl font-semibold">{{this.name}}</h2>
-        </div>
-      </a>
-    {{/each}}
+<h1 class="text-3xl font-bold mt-8 text-center">تسوق جميع الفئات</h1>
+<div class="bg-gray-50 py-10 mb-8">
+  <div class="mx-auto px-4">
+    <div
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      {{#each categories}}
+        <a
+          href="/view/category/{{this._id}}/products"
+          class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden"
+        >
+          <img
+            src="{{this.imageUrl}}"
+            alt="{{this.name}}"
+            class="object-cover w-full rounded-lg"
+          />
+          <div class="p-4 text-center">
+            <h2 class="text-xl font-semibold">{{this.name}}</h2>
+          </div>
+        </a>
+      {{/each}}
+    </div>
   </div>
 </div>

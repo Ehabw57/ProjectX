@@ -1,24 +1,52 @@
-<h1 class="text-3xl font-bold my-8 text-center">{{category.name}}</h1>
+<h1 class="text-3xl font-bold mt-8 text-center">{{category.name}}</h1>
+{{#if products.length}}
+  <div class="bg-gray-50 py-10 mb-8">
+    <div class="mx-auto px-4">
+      <div
+        class="grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+      >
+        {{#each products}}
+          <div
+            class="bg-white rounded-lg shadow-md hover:shadow-lg transition flex flex-col"
+          >
+            <img
+              src="{{this.imageUrl}}"
+              alt="{{this.name}}"
+              class="object-cover w-full rounded-t-lg"
+            />
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-  {{#each products}}
-    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition">
-      <img
-        src="{{this.imageUrl}}"
-        alt="{{this.name}}"
-        class="w-full object-cover"
-      />
-      <div class="p-4 text-center">
-        <h2 class="text-lg font-semibold mb-2">{{this.name}}</h2>
-        <a
-          href="https://wa.me/201234567890"
-          target="_blank"
-          class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-        >
-          <strong>للتواصل واتس اب</strong>
+            <div
+              class="p-4 text-center flex flex-col flex-grow justify-between"
+            >
+              <h2
+                class="text-lg font-semibold my-4 overflow-hidden break-words"
+              >
+                {{this.name}}
+              </h2>
 
-        </a>
+              <a
+                href="https://wa.me/201234567890"
+                target="_blank"
+                class="mt-auto w-full text-center block bg-white border-2 border-green-500 text-green-500 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white transition"
+              >
+                <strong class="text-[11px] md:text-lg">للتواصل واتس اب</strong>
+              </a>
+            </div>
+          </div>
+        {{/each}}
       </div>
     </div>
-  {{/each}}
-</div>
+  </div>
+{{else}}
+  <div class="text-center mt-20">
+    <p class="text-gray-600 text-xl mb-6">
+      لا توجد منتجات في هذه الفئة حاليًا 😔
+    </p>
+    <a
+      href="/view"
+      class="inline-block bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition"
+    >
+      ← العودة إلى الفئات
+    </a>
+  </div>
+{{/if}}
