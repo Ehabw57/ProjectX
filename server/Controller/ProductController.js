@@ -3,7 +3,7 @@ const Products = require("../Models/ProductModel");
 const Categories = require("../Models/CategoryModel");
 const { uploadImage, deleteImage } = require("../Utils/cloudinary");
 const { request } = require("http");
-const resizeImage = require('../Utils/imageProcess')
+const resizeImage = require("../Utils/imageProcess");
 
 async function getAllProducts(req, res) {
   try {
@@ -51,9 +51,7 @@ async function createProduct(req, res) {
 
 async function updateProduct(req, res) {
   try {
-    const product = await Products.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const product = await Products.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -69,11 +67,12 @@ async function updateProduct(req, res) {
       req.body.imageUrl = imageUrl;
       req.body.publicId = publicId;
     }
-    product = request.body;
+    Object.assign(product, req.body);
     await product.save();
 
     res.json(product);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 }

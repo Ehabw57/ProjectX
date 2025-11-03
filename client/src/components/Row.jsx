@@ -1,22 +1,59 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 export default function Row({ item, onDelete }) {
   const [loadingIds, setLoadingIds] = useState([]);
+
   const handleDelete = (id) => {
-    const confirmed = confirm("Are you sure you want to delete this item?");
-    if (!confirmed) return;
-    setLoadingIds((prev) => [...prev, id]);
-    const url = item.categoryId
-      ? `http://localhost:3000/product/${id}`
-      : `http://localhost:3000/category/${id}`;
-    fetch(url, { method: "DELETE" }).then((response) => {
-      if (response.ok) {
-        onDelete(id);
-      } else {
-        alert("Failed to delete item");
-      }
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setLoadingIds((prev) => [...prev, id]);
+          const url = item.categoryId
+            ? `http://localhost:3000/product/${id}`
+            : `http://localhost:3000/category/${id}`;
+          fetch(url, {
+            method: "DELETE",
+            headers: { Authorization: sessionStorage.getItem("adminPassword") },
+          }).then((response) => {
+            if (response.ok) {
+              Swal.fire({
+                title: "Success",
+                text: "Item deleted successfully.",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+              onDelete(id);
+            } else if ([401, 403].includes(response.status)) {
+              Swal.fire({
+                title: "Password Error!",
+                text: "Failed to delete the item.",
+                icon: "warning",
+                confirmButtonText: "OK",
+              });
+            }
+            setLoadingIds((prev) =>
+              prev.filter((loadingId) => loadingId !== id)
+            );
+          });
+        }
+      });
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       setLoadingIds((prev) => prev.filter((loadingId) => loadingId !== id));
-    });
+    }
   };
   return (
     <tr>
@@ -28,14 +65,20 @@ export default function Row({ item, onDelete }) {
       </td>
       <td className="py-4 border-b border-gray-200">{item.name}</td>
       {item.categoryId && (
-        <td className="py-4 border-b border-gray-200">{item.categoryId.name}</td>
+        <td className="py-4 border-b border-gray-200">
+          {item.categoryId.name}
+        </td>
       )}
       <td className="py-4 border-b border-gray-200 space-x-2">
-        <Link to={`/form/${item.categoryId ? "product" : "category"}/${item._id}`} state={{ item }} className="text-blue-500 hover:underline">
+        <Link
+          to={`/form/${item.categoryId ? "product" : "category"}/${item._id}`}
+          state={{ item }}
+          className="text-blue-500 hover:underline"
+        >
           Edit
         </Link>
         <button
-          disabled={loadingIds.includes(item._id)}
+          hidden={loadingIds.includes(item._id)}
           onClick={() => handleDelete(item._id)}
           className="text-red-500 hover:underline"
         >

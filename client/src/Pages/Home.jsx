@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Table from "../components/Table.jsx";
 import { Link } from "react-router-dom";
-import LoginModal from "../components/login.jsx";
+import LoginModal from "../components/Login.jsx";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("category");
   const [data, setData] = useState([]);
   const [isLoading, setIsloading] = useState(true);
