@@ -8,11 +8,12 @@ const {
   getCategoryById,
 } = require("../Controller/CategoryController");
 const upload = require("../Middleware/Multer");
+const adminAuth = require("../Middleware/authorMiddle");
 
-router.post("/", upload.single("image"), createCategory);
+router.post("/", adminAuth, upload.single("image"), createCategory);
 router.get("/", getAllCategories);
 router.get("/:id", getCategoryById);
-router.put("/:id", upload.single("image"), UpdateCategory);
-router.delete("/:id", deleteCategory);
+router.put("/:id", adminAuth, upload.single("image"), UpdateCategory);
+router.delete("/:id", adminAuth, deleteCategory);
 
 module.exports = router;

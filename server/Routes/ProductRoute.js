@@ -7,13 +7,14 @@ const {
   getProductById,
 } = require("../Controller/ProductController");
 const upload = require("../Middleware/Multer");
+const adminAuth = require("../Middleware/authorMiddle");
 
 const ProductRouter = express.Router();
 
 ProductRouter.get("/", getAllProducts);
 ProductRouter.get("/:id", getProductById);
-ProductRouter.post("/", upload.single("image"), createProduct);
-ProductRouter.put("/:id", upload.single("image"), updateProduct);
-ProductRouter.delete("/:id", deleteProduct);
+ProductRouter.post("/", adminAuth, upload.single("image"), createProduct);
+ProductRouter.put("/:id", adminAuth, upload.single("image"), updateProduct);
+ProductRouter.delete("/:id", adminAuth, deleteProduct);
 
 module.exports = ProductRouter;
