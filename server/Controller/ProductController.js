@@ -13,7 +13,18 @@ async function getAllProducts(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
-
+//get product by id
+async function getProductById(req, res) {
+  try {
+    const product = await Products.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 async function createProduct(req, res) {
   try {
     const { name, categoryId } = req.body;
@@ -81,6 +92,7 @@ async function deleteProduct(req, res) {
 
 module.exports = {
   getAllProducts,
+  getProductById,
   createProduct,
   updateProduct,
   deleteProduct,

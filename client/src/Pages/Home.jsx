@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Table from "../components/Table.jsx";
 import { Link } from "react-router-dom";
+import LoginModal from "../components/login.jsx";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(true);
   const [selectedType, setSelectedType] = useState("category");
   const [data, setData] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -39,6 +41,13 @@ export default function Home() {
 
   return (
     <>
+      {isOpen && <LoginModal onClose={() => setIsOpen(false)} />}
+      <div className="flex justify-between px-12">
+        <h1>Admin Panel</h1>
+        <button className="cursor-pointer" onClick={() => setIsOpen(true)}>
+          Renter password
+        </button>
+      </div>
       <div className="flex flex-col justify-center  mx-auto px-3  lg:w-[80%]">
         <div className="flex justify-center">
           <button
