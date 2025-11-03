@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import Table from "../components/Table.jsx";
 import { Link } from "react-router-dom";
 
@@ -12,10 +13,20 @@ export default function Home() {
   }
 
   async function fetchData(URL) {
-    setIsloading(true);
-    const response = await fetch(URL);
-    if (response.ok) setData(await response.json());
-    setIsloading(false);
+    try {
+      setIsloading(true);
+      const response = await fetch(URL);
+      if (response.ok) setData(await response.json());
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    } finally {
+      setIsloading(false);
+    }
   }
 
   useEffect(() => {
