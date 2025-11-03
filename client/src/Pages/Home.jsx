@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import Table from "../components/Table.jsx";
 import { Link } from "react-router-dom";
-import LoginModal from "../components/login.jsx";
+import LoginModal from "../components/Login.jsx";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("category");
   const [data, setData] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -14,10 +15,20 @@ export default function Home() {
   }
 
   async function fetchData(URL) {
-    setIsloading(true);
-    const response = await fetch(URL);
-    if (response.ok) setData(await response.json());
-    setIsloading(false);
+    try {
+      setIsloading(true);
+      const response = await fetch(URL);
+      if (response.ok) setData(await response.json());
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    } finally {
+      setIsloading(false);
+    }
   }
 
   useEffect(() => {

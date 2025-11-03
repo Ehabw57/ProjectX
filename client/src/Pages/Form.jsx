@@ -1,6 +1,7 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ImageUpload from "../components/uploadImage";
+import Swal from "sweetalert2";
 
 export default function Form() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,14 @@ export default function Form() {
       fetch("http://localhost:3000/category")
         .then((res) => res.json())
         .then((data) => setCategories(data))
-        .catch((err) => console.error("Error fetching categories:", err));
+        .catch((err) => {
+          Swal.fire({
+            title: "Error!",
+            text: err.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        });
     }
   }, [type]);
 
@@ -57,20 +65,43 @@ export default function Form() {
         headers: {
           authorization: sessionStorage.getItem("adminPassword"),
         },
-        body: formDataToSend, // ❗ مفيش headers هنا
+        body: formDataToSend,
       });
 
-      if (!res.ok) throw new Error("Failed to submit");
-
-      const data = await res.json();
-      console.log("✅ Success:", data);
-      alert(`${type} ${isEdit ? "updated" : "added"} successfully!`);
+      if ([401, 403].includes(res.status)) {
+        Swal.fire({
+          title: "Password Error!",
+          text: `Failed to ${
+            isEdit ? "update" : "add"
+          } ${type} please check your password.`,
+          icon: "info",
+          confirmButtonText: "OK",
+        });
+      } else if (res.status === 400) {
+        Swal.fire({
+          title: "Validation Error!",
+          text: `Please check the entered data for the ${type}.`,
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+      } else {
+        if (!isEdit) setFormData({ name: "", category: "", image: null });
+        Swal.fire({
+          title: "Success!",
+          text: `${type} ${isEdit ? "updated" : "added"} successfully.`,
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
     } catch (err) {
-      console.error("❌ Error:", err);
-      alert("Something went wrong!");
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
     setLoading(false);
-    console.log("Submitted Data:", formData);
   };
 
   return (
