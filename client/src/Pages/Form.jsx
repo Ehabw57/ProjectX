@@ -32,7 +32,7 @@ export default function Form() {
         .then((data) => setCategories(data))
         .catch((err) => {
           Swal.fire({
-            title: "Error!",
+            title: "حدث خطأ!",
             text: err.message,
             icon: "error",
             confirmButtonText: "OK",

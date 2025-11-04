@@ -8,11 +8,12 @@ export default function Row({ item, onDelete }) {
   const handleDelete = (id) => {
     try {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: "هل انت متأكد؟",
+        text: "هل تريد حذف هذا العنصر",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Delete it!",
+        confirmButtonText: "حذف!",
+        cancelButtonText: "إلغاء",
       }).then((result) => {
         if (result.isConfirmed) {
           setLoadingIds((prev) => [...prev, id]);
@@ -25,18 +26,18 @@ export default function Row({ item, onDelete }) {
           }).then((response) => {
             if (response.ok) {
               Swal.fire({
-                title: "Success",
-                text: "Item deleted successfully.",
+                title: "نجاح",
+                text: "تم الحذف بنجاح",
                 icon: "success",
-                confirmButtonText: "OK",
+                confirmButtonText: "موافق",
               });
               onDelete(id);
             } else if ([401, 403].includes(response.status)) {
               Swal.fire({
-                title: "Password Error!",
-                text: "Failed to delete the item.",
+                title: "خطأ في كلمة المرور!",
+                text: "فشل في حذف العنصر.",
                 icon: "warning",
-                confirmButtonText: "OK",
+                confirmButtonText: "موافق",
               });
             }
             setLoadingIds((prev) =>
@@ -47,10 +48,10 @@ export default function Row({ item, onDelete }) {
       });
     } catch (err) {
       Swal.fire({
-        title: "Error!",
+        title: "حدث خطأ!",
         text: err.message,
         icon: "error",
-        confirmButtonText: "OK",
+        confirmButtonText: "موافق",
       });
       setLoadingIds((prev) => prev.filter((loadingId) => loadingId !== id));
     }

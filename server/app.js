@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors")
+const cors = require("cors");
 const ProductRouter = require("./Routes/ProductRoute");
 const CategoryRouter = require("./Routes/CategoryRoute");
 const PORT = process.env.PORT || 3000;
@@ -28,15 +28,19 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.use("/product", ProductRouter);
 app.use("/category", CategoryRouter);
 app.use("/view", viewRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Yo I'm Good And Running!!");
+  try {
+    res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 app.listen(PORT, () => {
