@@ -35,8 +35,8 @@ export default function Home() {
   useEffect(() => {
     const url =
       selectedType === "product"
-        ? "http://localhost:3000/product"
-        : "http://localhost:3000/category";
+        ? `${window.SERVERDATA}/product`
+        : `${window.SERVERDATA}/category`;
     fetchData(url);
   }, [selectedType]);
 

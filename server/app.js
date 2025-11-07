@@ -9,6 +9,7 @@ const DBURL = process.env.DBURL || "mongodb://localhost:27017/testDb";
 const app = express();
 const viewRoutes = require("./Routes/viewRoutes");
 const path = require("path");
+const fs = require("fs");
 mongoose
   .connect(DBURL)
   .then(() => console.log("MongoDB connected"))
@@ -16,6 +17,9 @@ mongoose
 
 dotenv.config();
 const { engine } = require("express-handlebars");
+const index = fs.readFileSync("./public/index.html", "utf-8");
+const updatedIndex = index.replace("__SERVERDATA__", `"${process.env.APIURL}"`);
+fs.writeFileSync("./public/index.html", updatedIndex, "utf-8");
 
 app.engine(
   "hbs",

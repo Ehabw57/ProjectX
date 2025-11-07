@@ -18,8 +18,8 @@ export default function Row({ item, onDelete }) {
         if (result.isConfirmed) {
           setLoadingIds((prev) => [...prev, id]);
           const url = item.categoryId
-            ? `http://localhost:3000/product/${id}`
-            : `http://localhost:3000/category/${id}`;
+            ? `${window.SERVERDATA}/product/${id}`
+            : `${window.SERVERDATA}/category/${id}`;
           fetch(url, {
             method: "DELETE",
             headers: { Authorization: sessionStorage.getItem("adminPassword") },

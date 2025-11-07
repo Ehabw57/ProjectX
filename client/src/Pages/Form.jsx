@@ -27,7 +27,7 @@ export default function Form() {
 
   useEffect(() => {
     if (type === "product") {
-      fetch("http://localhost:3000/category")
+      fetch(`${window.SERVERDATA}/category`)
         .then((res) => res.json())
         .then((data) => setCategories(data))
         .catch((err) => {
@@ -51,8 +51,8 @@ export default function Form() {
     e.preventDefault();
     setLoading(true);
     const apiUrl = isEdit
-      ? `http://localhost:3000/${type}/${item._id}`
-      : `http://localhost:3000/${type}`;
+      ? `${window.SERVERDATA}/${type}/${item._id}`
+      : `${window.SERVERDATA}/${type}`;
 
     const method = isEdit ? "PUT" : "POST";
 
