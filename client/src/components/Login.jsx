@@ -37,6 +37,7 @@ function LoginModal({ onClose }) {
             placeholder="أدخل كلمة مرور المسؤول"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoFocus
           />
         </div>
 

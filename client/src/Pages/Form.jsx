@@ -41,7 +41,7 @@ export default function Form() {
     }
   }, [type]);
 
-  // 📌 تحديث القيم
+  //  تحديث القيم
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -165,6 +165,7 @@ export default function Form() {
 
           {/* 🖼️ رفع الصورة */}
           <ImageUpload
+            key={formData.image ? "has-image" : "no-image"}
             previewx={formData.image}
             onUpload={(file) => {
               setFormData((prev) => ({ ...prev, image: file }));

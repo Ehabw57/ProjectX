@@ -3,7 +3,7 @@ const Products = require("../Models/ProductModel");
 const Categories = require("../Models/CategoryModel");
 const { uploadImage, deleteImage } = require("../Utils/cloudinary");
 const { request } = require("http");
-const resizeImage = require("../Utils/imageProcess");
+// const resizeImage = require("../Utils/imageProcess");
 
 async function getAllProducts(req, res) {
   try {
@@ -37,7 +37,7 @@ async function createProduct(req, res) {
       return res.status(400).json({ message: "Image file is required" });
     }
 
-    await resizeImage(req.file.path, 500, 500);
+    // await resizeImage(req.file.path, 500, 500);
     const { imageUrl, publicId } = await uploadImage(req.file.path, "products");
     fs.unlinkSync(req.file.path);
 
@@ -57,7 +57,7 @@ async function updateProduct(req, res) {
     }
 
     if (req.file) {
-      await resizeImage(req.file.path, 500, 500);
+      // await resizeImage(req.file.path, 500, 500);
       const { imageUrl, publicId } = await uploadImage(
         req.file.path,
         "products"

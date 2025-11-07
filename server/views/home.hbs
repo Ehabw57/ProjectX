@@ -1,24 +1,48 @@
-<h1 class="text-3xl font-bold mt-8 text-center">تسوق جميع الفئات</h1>
-<div class="bg-gray-50 py-10 mb-8">
-  <div class="mx-auto px-4">
-    <div
-      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-    >
-      {{#each categories}}
-        <a
-          href="/view/category/{{this._id}}/products"
-          class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden"
-        >
-          <img
+<h1
+  class="text-3xl font-bold mt-8 text-center break-words whitespace-normal px-4"
+>تسوق جميع الفئات</h1>
+
+{{#if categories.length}}
+
+  <div class="bg-gray-50 py-10 mb-8">
+    <div class="mx-auto px-4">
+      <div
+        class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      >
+        {{#each categories}}
+          <a
+            href="/view/category/{{this._id}}/products"
+            class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden flex flex-col"
+          >
+            {{! <div
+            class="w-full flex items-center justify-center overflow-hidden rounded-t-lg"
+          > }}
+            {{!-- <img
             src="{{this.imageUrl}}"
             alt="{{this.name}}"
-            class="object-cover rounded-t-lg"
-          />
-          <div class="p-4 text-center">
-            <h2 class="text-xl font-semibold">{{this.name}}</h2>
-          </div>
-        </a>
-      {{/each}}
+            class="w-100 h-50 object-fit-cover"
+          /> --}}
+            {{! </div> }}
+            <div
+              class="w-[100%] h-[300px] bg-center bg-no-repeat bg-[length:100%_100%]"
+              style="background-image: url('{{this.imageUrl}}'); "
+            >
+            </div>
+            <div class="p-4 text-center">
+              <h2
+                class="text-xl font-semibold break-words whitespace-normal"
+              >{{this.name}}</h2>
+            </div>
+          </a>
+        {{/each}}
+      </div>
     </div>
   </div>
-</div>
+{{else}}
+  <div class="text-center mt-20">
+    <p class="text-gray-600 text-xl mb-6">
+      لا توجد فئات حاليا 😔
+    </p>
+
+  </div>
+{{/if}}

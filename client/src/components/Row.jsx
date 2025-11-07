@@ -62,10 +62,22 @@ export default function Row({ item, onDelete }) {
         {loadingIds.includes(item._id) && (
           <div className=" w-10 h-10 border-4 border-blue-300 border-t-transparent rounded-full animate-spin"></div>
         )}
-        <img src={item.imageUrl} className="w-5 h-5" />
+        <img src={item.imageUrl} className="w-15 h-15" />
       </td>
-      <td className="py-4 ">{item.name}</td>
-      {item.categoryId && <td className="py-4 ">{item.categoryId.name}</td>}
+      <td
+        className="p-4 max-w-20 truncate whitespace-nowrap overflow-hidden"
+        title={item.name}
+      >
+        {item.name}
+      </td>
+      {item.categoryId && (
+        <td
+          className="p-4 max-w-20 truncate whitespace-nowrap overflow-hidden"
+          title={item.categoryId.name}
+        >
+          {item.categoryId.name}
+        </td>
+      )}
       <td className="py-4  space-x-2 ">
         <Link
           to={`/form/${item.categoryId ? "product" : "category"}/${item._id}`}

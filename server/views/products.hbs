@@ -1,4 +1,9 @@
-<h1 class="text-3xl font-bold mt-8 text-center">{{category.name}}</h1>
+<h1
+  class="text-3xl font-bold mt-8 text-center break-words whitespace-normal px-4"
+>
+  {{category.name}}
+</h1>
+
 {{#if products.length}}
   <div class="bg-gray-50 py-10 mb-8">
     <div class="mx-auto px-4">
@@ -9,12 +14,16 @@
           <div
             class="bg-white rounded-lg shadow-md hover:shadow-lg transition flex flex-col"
           >
-            <img
+            {{!-- <img
               src="{{this.imageUrl}}"
               alt="{{this.name}}"
               class="object-cover w-full rounded-t-lg"
-            />
-
+            /> --}}
+            <div
+              class="w-[100%] h-[300px] bg-center bg-no-repeat bg-[length:100%_100%] rounded-t-lg"
+              style="background-image: url('{{this.imageUrl}}'); "
+            >
+            </div>
             <div
               class="p-4 text-center flex flex-col flex-grow justify-between"
             >
@@ -25,7 +34,7 @@
               </h2>
 
               <a
-                href="https://wa.me/201120250073"
+                href="https://wa.me/201120250073?text=السلام عليكم%20جدو%20سعدي%2C%20اريد%20الاستفسار%20عن%20المنتج%20{{this.name}}"
                 target="_blank"
                 class="mt-auto w-full text-center block bg-white border-2 border-green-500 text-green-500 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white transition"
               >
