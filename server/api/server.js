@@ -1,0 +1,50 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const ProductRouter = require("../Routes/ProductRoute");
+const CategoryRouter = require("../Routes/CategoryRoute");
+const viewRoutes = require("../Routes/viewRoutes");
+const path = require("path");
+const fs = require("fs");
+const serverless = require("serverless-http");
+
+dotenv.config();
+
+const app = express();
+
+const DBURL = process.env.DBURL;
+mongoose
+  .connect(DBURL)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+
+const { engine } = require("express-handlebars");
+const index = fs.readFileSync("./public/index.html", "utf-8");
+const updatedIndex = index.replace("__SERVERDATA__", `"${process.env.APIURL}"`);
+fs.writeFileSync("./public/index.html", updatedIndex, "utf-8");
+
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    defaultLayout: "main",
+    layoutsDir: path.join(__dirname, "../views/layouts"),
+    partialsDir: path.join(__dirname, "../views/partial"),
+  })
+);
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "../views"));
+app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.json());
+app.use(cors());
+app.use("/product", ProductRouter);
+app.use("/category", CategoryRouter);
+app.use("/view", viewRoutes);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+module.exports = app;
+module.exports.handler = serverless(app);
