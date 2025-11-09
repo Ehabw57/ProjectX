@@ -20,9 +20,8 @@ mongoose
   .catch((err) => console.log(err));
 
 const { engine } = require("express-handlebars");
-const index = fs.readFileSync("./public/index.html", "utf-8");
-const updatedIndex = index.replace("__SERVERDATA__", `"${process.env.APIURL}"`);
-fs.writeFileSync("./public/index.html", updatedIndex, "utf-8");
+const indexPath = path.join(__dirname, "../public/index.html");
+let indexHTML = fs.readFileSync(indexPath, "utf-8");
 
 app.engine(
   "hbs",
@@ -35,15 +34,20 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "../views"));
-app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
 app.use(cors());
+app.use("/", viewRoutes);
+app.use(express.static(path.join(__dirname, "../public")));
 app.use("/product", ProductRouter);
 app.use("/category", CategoryRouter);
-app.use("/view", viewRoutes);
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+app.get("/admin", (req, res) => {
+  console.log("Admin route accessed");
+  const updatedIndex = indexHTML.replace(
+    "__SERVERDATA__",
+    `"${process.env.APIURL}"`
+  );
+  res.send(updatedIndex);
 });
 
 module.exports = app;

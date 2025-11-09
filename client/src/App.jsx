@@ -9,7 +9,7 @@ import Layout from "./layouts/Layout";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/admin",
       element: <Layout />,
       children: [
         { index: true, element: <Home /> },

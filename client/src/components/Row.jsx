@@ -80,7 +80,7 @@ export default function Row({ item, onDelete }) {
       )}
       <td className="py-4  space-x-2 ">
         <Link
-          to={`/form/${item.categoryId ? "product" : "category"}/${item._id}`}
+          to={`form/${item.categoryId ? "product" : "category"}/${item._id}`}
           state={{ item }}
           className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800 text-xs sm:text-lg"
         >

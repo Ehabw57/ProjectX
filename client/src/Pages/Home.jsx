@@ -69,7 +69,7 @@ export default function Home() {
           <Table data={data} type={selectedType} onDelete={onDelete} />
         )}
         <Link
-          to={`/form/${selectedType}`}
+          to={`form/${selectedType}`}
           className="block mx-auto mt-2 w-full sm:w-[50vw] bg-blue-500 text-white text-center p-2 rounded"
         >
           إضافة {selectedType === "product" ? "منتج" : "فئة"}
