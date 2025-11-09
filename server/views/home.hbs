@@ -14,19 +14,12 @@
             href="/view/category/{{this._id}}/products"
             class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden flex flex-col"
           >
-            {{! <div
-            class="w-full flex items-center justify-center overflow-hidden rounded-t-lg"
-          > }}
-            {{!-- <img
-            src="{{this.imageUrl}}"
-            alt="{{this.name}}"
-            class="w-100 h-50 object-fit-cover"
-          /> --}}
-            {{! </div> }}
-            <div
-              class="w-[100%] h-[300px] bg-center bg-no-repeat bg-[length:100%_100%]"
-              style="background-image: url('{{this.imageUrl}}'); "
-            >
+            <div class="w-full h-[300px] rounded-t-lg overflow-hidden">
+              <img
+                src="{{this.imageUrl}}"
+                alt="{{this.name}}"
+                class="w-full h-full object-fill object-center"
+              />
             </div>
             <div class="p-4 text-center">
               <h2

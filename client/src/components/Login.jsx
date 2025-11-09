@@ -2,24 +2,16 @@ import React, { useState, useEffect } from "react";
 
 function LoginModal({ onClose }) {
   const [password, setPassword] = useState("");
-  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const savedPassword = sessionStorage.getItem("adminPassword");
-    if (!savedPassword) {
-      // setShowModal(true);
-    }
+    sessionStorage.getItem("adminPassword");
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     sessionStorage.setItem("adminPassword", password);
-    // setShowModal(false);
     onClose();
   };
-
-  // if (!showModal) return null;
-
   return (
     <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex justify-center items-center z-50">
       <form
@@ -32,7 +24,7 @@ function LoginModal({ onClose }) {
 
         <div className="mb-4">
           <input
-            className="w-full px-3 py-2 border-1 border-blue-400 rounded outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-3 py-2 border border-blue-400 rounded outline-none focus:ring-2 focus:ring-blue-400"
             type="password"
             placeholder="أدخل كلمة مرور المسؤول"
             value={password}

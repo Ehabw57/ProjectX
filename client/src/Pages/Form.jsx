@@ -8,7 +8,7 @@ import LoginModal from "../components/Login";
 export default function Form() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { type } = useParams(); // 'product' or 'category'
+  const { type } = useParams();
   const location = useLocation();
   const { item } = location.state || {};
   const isEdit = !!item;
@@ -41,7 +41,6 @@ export default function Form() {
     }
   }, [type]);
 
-  //  تحديث القيم
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -56,7 +55,6 @@ export default function Form() {
 
     const method = isEdit ? "PUT" : "POST";
 
-    // ✅ هنا نستخدم FormData بدل JSON
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
     if (type === "product") {
@@ -64,7 +62,7 @@ export default function Form() {
     }
 
     if (formData.image) {
-      formDataToSend.append("image", formData.image); // لازم يكون اسم الفايل زي اسم الحقل اللي السيرفر مستنيه
+      formDataToSend.append("image", formData.image);
     }
     try {
       const res = await fetch(apiUrl, {
@@ -105,7 +103,7 @@ export default function Form() {
     } catch (error) {
       Swal.fire({
         title: "حدث خطأ!",
-        text: "حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.",
+        text: error.message || "حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.",
         icon: "error",
         confirmButtonText: "موافق",
       });

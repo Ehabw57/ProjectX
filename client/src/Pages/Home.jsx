@@ -68,12 +68,6 @@ export default function Home() {
         ) : (
           <Table data={data} type={selectedType} onDelete={onDelete} />
         )}
-        {/* <Link
-          to={`/form/${selectedType}`}
-          className="flex justify-center items-center  mt-2 w-full left-0 sm:left-1/4  sm:w-[50vw]  bg-blue-500 text-white text-center  p-2 rounded"
-        >
-          Add {selectedType === "product" ? "Product" : "Category"}
-        </Link> */}
         <Link
           to={`/form/${selectedType}`}
           className="block mx-auto mt-2 w-full sm:w-[50vw] bg-blue-500 text-white text-center p-2 rounded"

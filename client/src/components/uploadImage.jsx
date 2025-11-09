@@ -1,25 +1,30 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 function ImageUpload({ previewx = null, onUpload }) {
-  // ✅ أضفنا prop اسمه onUpload
   const [fileName, setFileName] = useState("");
   const [preview, setPreview] = useState(previewx);
   const fileInputRef = useRef(null);
 
-  // ✅ لما المستخدم يختار فايل من الجهاز
+  // ✅ تحديث المعاينة لو الـ previewx اتغير من الـ Form
+  useEffect(() => {
+    if (previewx instanceof File) {
+      const previewUrl = URL.createObjectURL(previewx);
+      setPreview(previewUrl);
+    } else {
+      setPreview(previewx || null);
+    }
+  }, [previewx]);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFileName(file.name);
       const previewUrl = URL.createObjectURL(file);
       setPreview(previewUrl);
-
-      // ✅ أضفنا دي علشان نبلغ الفورم إن في صورة جديدة اتضافت
-      onUpload && onUpload(file); // ← هنا بيرجع الفايل للفورم
+      onUpload && onUpload(file);
     }
   };
 
-  // ✅ لما المستخدم يسحب الصورة ويحطها
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -27,8 +32,6 @@ function ImageUpload({ previewx = null, onUpload }) {
       setFileName(file.name);
       const previewUrl = URL.createObjectURL(file);
       setPreview(previewUrl);
-
-      // ✅ نفس الفكرة هنا
       onUpload && onUpload(file);
     }
   };
@@ -39,7 +42,7 @@ function ImageUpload({ previewx = null, onUpload }) {
     setFileName("");
     setPreview(null);
     fileInputRef.current.value = "";
-    onUpload && onUpload(null); // ✅ لما نحذف الصورة، نرجع null للفورم
+    onUpload && onUpload(null);
   };
 
   return (

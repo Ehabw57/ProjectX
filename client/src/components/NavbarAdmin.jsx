@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function NavbarAdmin({ setIsOpen }) {
@@ -12,7 +11,6 @@ function NavbarAdmin({ setIsOpen }) {
       </Link>
       <button
         className="font-bold text-xs bg-blue-600 text-white hover:bg-blue-800 px-3 py-1 rounded  sm:text-lg"
-        // className="font-bold text-xs bg-blue-600 text-white hover:bg-blue-800 rounded cursor-pointer  p-2   "
         onClick={() => setIsOpen(true)}
       >
         إعادة إدخال كلمة المرور
